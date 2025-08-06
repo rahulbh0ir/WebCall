@@ -78,3 +78,10 @@
       localStream.getTracks().forEach(track => pc.addTrack(track, localStream));
       localVideo.srcObject = localStream;
     }
+
+
+   document.getElementById("roomInput").addEventListener("keypress", (event) => {
+      if (event.key === "Enter") {
+        joinRoom();
+      }
+    })
