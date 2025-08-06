@@ -5,7 +5,7 @@
 </head>
 <body>
   <h2>My Video</h2>
-  <video id="localVideo" autoplay playsinline muted></video>
+  <video id="localVideo" autoplay playsinline></video>
   <h2>Remote Video</h2>
   <video id="remoteVideo" autoplay playsinline></video>
 
@@ -16,7 +16,7 @@
 
   <script>
 
-    const socket = new WebSocket("wss://webcall-7ios.onrender.com");
+    const socket = new WebSocket("ws://localhost:3000");
 
 
     let pc = null;
