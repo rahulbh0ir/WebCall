@@ -13,15 +13,17 @@
   <div id="video">
     <video class="player" id="localVideo" autoplay playsinline></video>
     <video class="player" id="remoteVideo" autoplay playsinline></video>
+    
     <div class="controls-container">
       <img class="controls" id="camera" src="./icons/video.png" onclick="toggleVideo()" />
       <img class="controls" id="mic" src="./icons/mic.png" onclick="toggleMic()" />
       <img class="controls" id="endcall" src="./icons/endcall.png" onclick="hangup()" />
     </div>
+
   </div>
 
   <div id="room">
-    <input type="text" id="roomInput" placeholder="Enter room name" autofocus/>
+    <input type="text" id="roomInput" placeholder="Enter room name" autofocus autocomplete="off"/>
     <button id="join" onclick="joinRoom()">Join Room</button>
   </div>
 

@@ -34,9 +34,6 @@ button{
   cursor: pointer;
 }
 
-#remoteVideo{
-  display: none;
-}
 
 .controls-container {
   position: absolute;
