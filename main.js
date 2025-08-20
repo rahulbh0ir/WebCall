@@ -76,7 +76,7 @@ async function joinRoom() {
   document.getElementById("video").style.display = "grid";
   roominfo.style.display = "none";
 
-  localStream = await navigator.mediaDevices.getUserMedia({ video: true, audio: false });
+  localStream = await navigator.mediaDevices.getUserMedia({ video: true, audio: true });
   localVideo.srcObject = localStream;
 
   socket.send(JSON.stringify({ type: "join", room }));
