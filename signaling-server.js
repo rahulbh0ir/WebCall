@@ -87,6 +87,7 @@ wss.on('connection', (ws) => {
   // Handling disconnection
 
   ws.on('close', () => {
+    broadcastToRoom(joinedRoom, id, { type: 'leave', payload: "Friend has left" });
     clients.delete(id);
     
     if (joinedRoom && rooms.has(joinedRoom)) {
