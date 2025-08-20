@@ -12,7 +12,7 @@
 }
 
 
-#room{
+#info{
   margin-top: 50px;
   text-align: center;
   gap: 10px;
@@ -42,4 +42,20 @@ button{
   transform: translateX(-50%);
   display: flex;
   gap: 20px;
+}
+
+.controls{
+  border: black 2px solid;
+  padding: 10px;
+  border-radius: 50%;
+  height: 30px;
+  width: 30px;
+  cursor: pointer;
+}
+img{
+  color: white;
+}
+
+#endcall{
+  background-color: tomato;
 }

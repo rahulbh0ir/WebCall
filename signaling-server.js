@@ -66,6 +66,20 @@ wss.on('connection', (ws) => {
     if (['offer', 'answer', 'ice-candidate'].includes(type) && joinedRoom) {
       broadcastToRoom(joinedRoom, id, { type, payload });
     }
+
+    if (type === 'leave' && joinedRoom) {
+      broadcastToRoom(joinedRoom, id, { type: 'leave', payload: "Friend has left" });
+
+      if (rooms.has(joinedRoom)) {
+        rooms.get(joinedRoom).delete(id);
+        if (rooms.get(joinedRoom).size === 0) {
+          rooms.delete(joinedRoom);
+        }
+      }
+      joinedRoom = null;
+      
+      console.log(`Client ${id} left room ${room}`);
+    }
   });
 
 

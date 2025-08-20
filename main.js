@@ -8,6 +8,7 @@
 
     const localVideo = document.getElementById("localVideo");
     const remoteVideo = document.getElementById("remoteVideo");
+    let roominfo = document.getElementById("info");
     
 
     const config = {
@@ -43,9 +44,12 @@
         if (msg.payload) {
           await pc.addIceCandidate(msg.payload);
         }
-      }
+      } 
+      else if (msg.type === "leave") {
+        console.log(`Client ${msg.from} left the room.`);
+      }  
 
-    };
+    }
 
 
 
@@ -67,7 +71,11 @@
       if (!room) return alert("Enter a room name");
       
       document.getElementById("video").style.display = "grid";
-
+      roominfo.style.display = "none";
+      
+      localStream = await navigator.mediaDevices.getUserMedia({ video: true, audio: true });
+      localVideo.srcObject = localStream;
+      
       socket.send(JSON.stringify({ type: "join", room }));
 
       await createPeerConnection();
@@ -84,8 +92,10 @@
     // Create Peer Connection on both ends
 
     async function createPeerConnection() {
+      
       if (pc) return;
-
+      
+      
       pc = new RTCPeerConnection(config);
 
 
@@ -99,13 +109,57 @@
         remoteVideo.srcObject = event.streams[0];
       };
 
-      localStream = await navigator.mediaDevices.getUserMedia({ video: true, audio: true });
-
       localStream.getTracks().forEach(track => pc.addTrack(track, localStream));
 
-      localVideo.srcObject = localStream;
-
     }
+
+
+    function toggleMic() {
+      const micButton = document.getElementById("mic");
+      const audioTrack = localStream.getAudioTracks()[0];
+      
+      if (audioTrack.enabled) {
+        audioTrack.enabled = false;
+        micButton.style.backgroundColor = "tomato";
+        micButton.src = "./icons/mic-off.png";
+      } else {
+        audioTrack.enabled = true;
+        micButton.style.backgroundColor = "transparent";
+        micButton.src = "./icons/mic.png";
+      }
+    }
+
+    function toggleVideo() {
+      const videoButton = document.getElementById("camera");
+      const videoTrack = localStream.getVideoTracks()[0];
+      
+      if (videoTrack.enabled) {
+        videoTrack.enabled = false;
+        videoButton.style.backgroundColor = "tomato";
+        videoButton.src = "./icons/video-off.png";
+      } else {
+        videoTrack.enabled = true;
+        videoButton.style.backgroundColor = "transparent";
+        videoButton.src = "./icons/video.png";
+      }
+    }
+
+
+    function hangup() {
+      if (pc) {
+        pc.close();
+        pc = null;
+      }
+      localStream.getTracks().forEach(track => track.stop());
+      localVideo.srcObject = null;
+      remoteVideo.srcObject = null;
+
+      roominfo.style.display = "block";
+      document.getElementById("video").style.display = "none";
+      
+      socket.send(JSON.stringify({ type: "leave", room }));
+    
+    } 
 
 
 
