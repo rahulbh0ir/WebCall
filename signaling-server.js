@@ -63,7 +63,7 @@ wss.on('connection', (ws) => {
 
     // relay offer/answer/ice to other peers in room
 
-    if (['offer', 'answer', 'ice-candidate'].includes(type) && joinedRoom) {
+    if (['offer', 'answer', 'ice-candidate', 'message'].includes(type) && joinedRoom) {
       broadcastToRoom(joinedRoom, id, { type, payload });
     }
 

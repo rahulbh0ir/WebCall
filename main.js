@@ -1,10 +1,11 @@
 
-const socket = new WebSocket("https://webcall-7ios.onrender.com");
+const socket = new WebSocket("ws://localhost:3000");
 
 
 let pc = null;
 let room = null;
 let localStream;
+let isChat = false;
 
 let localVideo = document.getElementById("localVideo");
 const remoteVideo = document.getElementById("remoteVideo");
@@ -51,6 +52,12 @@ socket.onmessage = async (event) => {
     remoteVideo.style.display = "none";
     localVideo.classList.remove("smallframe");
   }
+  else if(msg.type === "message") {
+    let messages = document.getElementById("messages")
+    let msgFrom = document.createElement("p")
+    msgFrom.textContent = `Him : ${ msg.payload}`
+    messages.appendChild(msgFrom)
+  }
 
 }
 
@@ -76,7 +83,7 @@ async function joinRoom() {
   document.getElementById("video").style.display = "grid";
   roominfo.style.display = "none";
 
-  localStream = await navigator.mediaDevices.getUserMedia({ video: true, audio: true });
+  localStream = await navigator.mediaDevices.getUserMedia({ video: true, audio: false });
   localVideo.srcObject = localStream;
 
   socket.send(JSON.stringify({ type: "join", room }));
@@ -167,6 +174,40 @@ function hangup() {
 }
 
 
+function chat() {
+  const video  = document.getElementById("video");
+  const chat  = document.getElementById("chat");
+  const chatButton = document.getElementById("chatBtn")
+
+  isChat = !isChat;
+  
+  if(isChat) {
+    video.style.gridTemplateColumns = "3fr 1fr";
+    chat.style.display = "block"
+    chatButton.style.backgroundColor = "tomato"
+  }else{
+    video.style.gridTemplateColumns = "1fr";
+    chat.style.display = "none"
+    chatButton.style.backgroundColor = "transparent"
+  }
+
+}
+
+
+const sendMessage = async () => {
+  let messageInput = document.getElementById("messageInput").value;
+  let messages = document.getElementById("messages");
+  
+  if(!messageInput) return;
+
+  let msgContent = document.createElement("p")
+  msgContent.textContent = ` Me : ${messageInput}`;
+  messages.append(msgContent)
+
+  send("message", messageInput)
+
+  document.getElementById("messageInput").value = ""
+}
 
 // Adding functionality to join room on Enter key press
 
