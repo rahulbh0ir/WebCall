@@ -203,18 +203,19 @@ const sendMessage = async () => {
   let messages = document.getElementById("messages");
   
   if(!messageInput) return;
+
   let div = document.createElement("div")
   let msgContent = document.createElement("p")
+  
+  div.classList.add("chatbubble")
   div.appendChild(msgContent)
-  msgContent.textContent = ` Me : ${messageInput}`;
-  msgContent.style.textAlign = "right"
-  msgContent.style.backgroundColor = "lightcoral"
-  msgContent.style.textAlign = "right"
+  
+  msgContent.textContent = ` Me : ${messageInput}`; 
+  msgContent.style = "background-color: lightblue";
   
   messages.append(div)
-
+  
   send("message", messageInput)
-
   document.getElementById("messageInput").value = ""
 }
 
