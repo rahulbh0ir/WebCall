@@ -88,8 +88,9 @@
 
 
 #endcall{
-  background-color: tomato;
+  background-color: rgba(255, 0, 0, 0.784);
 }
+
 
 #chat{
   width: 25%;
@@ -134,4 +135,13 @@
   border: none;
   border-radius: 5px;
   cursor: pointer;
+}
+
+p{ 
+  /* width: max-content; */
+  /* color: whitesmoke; */
+  border: 2px solid black;
+  border-radius: 5px;
+  padding: 10px 15px;
+  margin-bottom: 10px;
 }

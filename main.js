@@ -55,8 +55,12 @@ socket.onmessage = async (event) => {
   else if(msg.type === "message") {
     let messages = document.getElementById("messages")
     let msgFrom = document.createElement("p")
+    let div = document.createElement("div")
+    div.appendChild(msgFrom)
     msgFrom.textContent = `Him : ${ msg.payload}`
-    messages.appendChild(msgFrom)
+    msgFrom.style.backgroundColor = "lightgray" 
+    messages.appendChild(div)
+
   }
 
 }
@@ -199,10 +203,15 @@ const sendMessage = async () => {
   let messages = document.getElementById("messages");
   
   if(!messageInput) return;
-
+  let div = document.createElement("div")
   let msgContent = document.createElement("p")
+  div.appendChild(msgContent)
   msgContent.textContent = ` Me : ${messageInput}`;
-  messages.append(msgContent)
+  msgContent.style.textAlign = "right"
+  msgContent.style.backgroundColor = "lightcoral"
+  msgContent.style.textAlign = "right"
+  
+  messages.append(div)
 
   send("message", messageInput)
 
