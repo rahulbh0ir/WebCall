@@ -52,13 +52,20 @@ socket.onmessage = async (event) => {
     remoteVideo.style.display = "none";
     localVideo.classList.remove("smallframe");
   }
-  else if(msg.type === "message") {
+  else if(msg.type === "message") { 
+
     let messages = document.getElementById("messages")
     let msgFrom = document.createElement("p")
+    let span = document.createElement("span")
     let div = document.createElement("div")
+    
     div.appendChild(msgFrom)
-    msgFrom.textContent = `Him : ${ msg.payload}`
-    msgFrom.style.backgroundColor = "lightgray" 
+    div.appendChild(span)
+    
+    span.textContent = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+    msgFrom.textContent = ` Him : ${ msg.payload}`
+    msgFrom.style = "background-color: lightpink"; 
+   
     messages.appendChild(div)
 
   }
@@ -206,15 +213,18 @@ const sendMessage = async () => {
 
   let div = document.createElement("div")
   let msgContent = document.createElement("p")
+  let span = document.createElement("span")
   
   div.classList.add("chatbubble")
   div.appendChild(msgContent)
+  div.appendChild(span)
   
   msgContent.textContent = ` Me : ${messageInput}`; 
   msgContent.style = "background-color: lightblue";
+  span.textContent = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
   
-  messages.append(div)
-  
+  messages.append(div);
+  messages.scrollTop = messages.scrollHeight;
   send("message", messageInput)
   document.getElementById("messageInput").value = ""
 }
